@@ -28,9 +28,6 @@ impl OrbitConfig {
             .and_then(|name| self.profiles.get(name))
     }
 
-    // pub fn get_token(&self) -> Option<&str> {
-    //     self.active_profile().map(|p| p.token.as_str())
-    // }
 }
 
 impl Profile {
