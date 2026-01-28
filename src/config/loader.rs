@@ -9,8 +9,8 @@ pub fn load_config() -> Result<OrbitConfig, OrbitError> {
         return load_from_file(&local_config);
     }
 
-    if let Some(config_dir) = dirs::config_dir() {
-        let global_config = config_dir.join("orbit").join("orbit.toml");
+    if let Some(home_dir) = dirs::home_dir() {
+        let global_config = home_dir.join(".config").join("orbit").join("orbit.toml");
         if global_config.exists() {
             return load_from_file(&global_config);
         }
@@ -26,11 +26,11 @@ fn load_from_file(path: &PathBuf) -> Result<OrbitConfig, OrbitError> {
 }
 
 pub fn save_config(config: &OrbitConfig) -> Result<(), OrbitError> {
-    let config_dir = dirs::config_dir().ok_or(OrbitError::Other(
-        "Could not find config directory".to_string(),
+    let home_dir = dirs::home_dir().ok_or(OrbitError::Other(
+        "Could not find home directory".to_string(),
     ))?;
 
-    let orbit_dir = config_dir.join("orbit");
+    let orbit_dir = home_dir.join(".config").join("orbit");
 
     fs::create_dir_all(&orbit_dir).map_err(|e| OrbitError::Other(e.to_string()))?;
 
